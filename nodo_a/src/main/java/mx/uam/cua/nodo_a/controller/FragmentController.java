@@ -1,4 +1,4 @@
-package mx.uam.cua.nodo_a;
+package mx.uam.cua.nodo_a.controller;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
