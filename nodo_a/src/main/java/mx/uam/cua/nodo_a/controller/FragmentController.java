@@ -16,7 +16,7 @@ public class FragmentController {
     @GetMapping("/{name}")
     public ResponseEntity<Resource> getFragment(@PathVariable String name) throws Exception {
 
-        Path path = Paths.get("videos", name);
+        Path path = Paths.get("nodo_a", "videos", name);
 
         Resource resource = new UrlResource(path.toUri());
 
