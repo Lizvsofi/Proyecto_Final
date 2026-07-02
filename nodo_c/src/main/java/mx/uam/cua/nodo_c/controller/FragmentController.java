@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/videos")
 public class FragmentController {
 
-    @GetMapping("/{video_prueba01.mp4}")
+    @GetMapping("/{name}")
     public ResponseEntity<Resource> getFragment(@PathVariable String name) throws Exception {
 
-        Path path = Paths.get("videos", name);
+        Path path = Paths.get("nodo_c","videos");
 
         Resource resource = new UrlResource(path.toUri());
 
