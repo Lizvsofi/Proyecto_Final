@@ -2,6 +2,9 @@ package mx.uam.cua.nodo_c.controller;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -17,15 +20,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/videos")
 public class FragmentController {
 
-    @GetMapping("/{name}")
-    public ResponseEntity<Resource> getFragment(@PathVariable String name) throws Exception {
+    @GetMapping
+    public List<String> listarFragmentos(){
+        File carpeta = new File("nodo_c/videos");
+        String[] archivos = carpeta.list();
 
-        Path path = Paths.get("nodo_c","videos", name);
+        if (archivos == null){
+            return List.of();
+        }
 
-        Resource resource = new UrlResource(path.toUri());
-
-        return ResponseEntity.ok()
-                .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                .body(resource);
+        return Arrays.asList(archivos);
     }
 }
