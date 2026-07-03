@@ -17,10 +17,18 @@ public class P2PController {
     }
 
     @GetMapping("/nodoA")
-    public String[] consultarNodoB() {
+    public String[] consultarNodoA() {
 
         return fragmentService.obtenerVideosNodo(
                 "http://localhost:8081"
+        );
+    }
+
+    @GetMapping("/nodoC")
+    public String[] consultarNodoC() {
+
+        return fragmentService.obtenerVideosNodo(
+                "http://localhost:8083"
         );
     }
 }
