@@ -8,19 +8,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
 @RequestMapping("/videos")
 public class FragmentController {
 
     @GetMapping
-    public List<String> listarFragmentos(){
-        File carpeta = new File("nodo_c/videos");
-        String[] archivos = carpeta.list();
+    public List<String> listarVideos() {
 
-        if (archivos == null){
-            return List.of();
-        }
+        File carpeta = new File("nodo_c/videos");
+
+        String[] archivos = carpeta.list((dir, nombre) ->
+                nombre.endsWith(".mp4"));
 
         return Arrays.asList(archivos);
     }
