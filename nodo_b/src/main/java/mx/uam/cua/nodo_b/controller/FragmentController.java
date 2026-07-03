@@ -1,10 +1,18 @@
 package mx.uam.cua.nodo_b.controller;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,5 +29,20 @@ public class FragmentController {
                 nombre.endsWith(".mp4"));
 
         return Arrays.asList(archivos);
+    }
+
+    @GetMapping("/{nombre}")
+    public ResponseEntity<Resource> descargarVideo(
+            @PathVariable String nombre) throws IOException {
+
+        Path ruta = Paths.get("nodo_b", "videos")
+                .resolve(nombre);
+
+        Resource resource = new UrlResource(ruta.toUri());
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=\"" + nombre + "\"")
+                .body(resource);
     }
 }
