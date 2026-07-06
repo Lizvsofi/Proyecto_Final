@@ -35,7 +35,7 @@ public class FragmentController {
     public ResponseEntity<Resource> descargarVideo(
             @PathVariable String nombre) throws IOException {
 
-        Path ruta = Paths.get("nodo_b", "videos")
+        Path ruta = Paths.get("nodo_b", "/videos")
                 .resolve(nombre);
 
         Resource resource = new UrlResource(ruta.toUri());

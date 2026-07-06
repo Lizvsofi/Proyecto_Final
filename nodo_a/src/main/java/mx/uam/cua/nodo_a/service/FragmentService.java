@@ -23,26 +23,35 @@ public class FragmentService {
         );
     }
 
-    // DESCARGAR Y GUARDAR ARCHIVO
     public void descargarFragmento(String urlNodo, String nombreArchivo, String nodoLocal) {
 
-        try {
-            ResponseEntity<Resource> response = restTemplate.getForEntity(
-                    urlNodo + "/videos/" + nombreArchivo,
-                    Resource.class
-            );
+    try {
 
-            Resource resource = response.getBody();
+        ResponseEntity<Resource> response = restTemplate.getForEntity(
+                urlNodo + "/videos/" + nombreArchivo,
+                Resource.class
+        );
 
-            Path ruta = Paths.get(nodoLocal, "videos", nombreArchivo);
+        Resource resource = response.getBody();
 
-            Files.copy(resource.getInputStream(), ruta);
+        Path carpeta = Paths.get(nodoLocal, "videos");
+        Files.createDirectories(carpeta);
 
-            System.out.println("Archivo descargado: " + nombreArchivo);
+        Path ruta = carpeta.resolve(nombreArchivo);
 
-        } catch (Exception e) {
-            System.out.println("Error descargando: " + nombreArchivo);
-            e.printStackTrace();
-        }
+        System.out.println("Guardando en: " + ruta.toAbsolutePath());
+
+        Files.copy(
+                resource.getInputStream(),
+                ruta,
+                java.nio.file.StandardCopyOption.REPLACE_EXISTING
+        );
+
+        System.out.println("Archivo descargado: " + nombreArchivo);
+
+    } catch (Exception e) {
+        System.out.println("Error descargando: " + nombreArchivo);
+        e.printStackTrace();
     }
+}
 }
