@@ -16,20 +16,15 @@ public class P2PController {
         this.fragmentService = fragmentService;
     }
 
-    @GetMapping("/nodoA")
-    public String[] consultarNodoA(){
+    @GetMapping("/descargar")
+    public String descargar() {
 
-        return fragmentService.obtenerVideosNodo(
-                "http://localhost:8081"
+        fragmentService.descargarFragmento(
+                "http://localhost:8081",   // nodo B
+                "video_prueba05.mp4",      // archivo
+                "nodo_c"                   // nodo actual
         );
+
+        return "Descarga iniciada";
     }
-
-    @GetMapping("/nodoB")
-    public String[] consultarNodoB(){
-
-        return fragmentService.obtenerVideosNodo(
-                "http://localhost:8082"
-        );
-    }
-
 }
