@@ -21,7 +21,7 @@ public class P2PController {
 
         fragmentService.descargarFragmento(
                 "http://localhost:8083",   // nodo C
-                "video_prueba03.mp4",      // archivo
+                "video_prueba06.mp4",      // archivo
                 "nodo_b"                   // nodo actual
         );
 
