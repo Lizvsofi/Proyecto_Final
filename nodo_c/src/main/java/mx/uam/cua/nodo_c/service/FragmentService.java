@@ -56,7 +56,7 @@ public class FragmentService {
         System.out.println("Archivo descargado: " + nombreArchivo);
         
         FragmentMessage mensaje = new FragmentMessage(
-            "nodo_a",
+            "nodo_c",
             nombreArchivo,
             1
         );
