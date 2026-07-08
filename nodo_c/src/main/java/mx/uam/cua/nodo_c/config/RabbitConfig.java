@@ -12,7 +12,7 @@ import org.springframework.amqp.support.converter.MessageConverter;
 @Configuration
 public class RabbitConfig {
 
-    public static final String QUEUE = "fragment.queue.a";
+    public static final String QUEUE = "fragment.queue.c";
     public static final String EXCHANGE = "fragment.exchange";
 
     @Bean
