@@ -4,6 +4,8 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import mx.uam.cua.nodo_c.messaging.FragmentPublisher;
+import mx.uam.cua.nodo_c.model.FragmentMessage;
 
 import java.io.FileOutputStream;
 import java.nio.file.Files;
@@ -14,14 +16,19 @@ import java.nio.file.Paths;
 public class FragmentService {
 
     private final RestTemplate restTemplate = new RestTemplate();
+    private final FragmentPublisher publisher;
 
-    // obtener lista de videos de otro nodo
+    public FragmentService(FragmentPublisher publisher) {
+        this.publisher = publisher;
+    }
+
     public String[] obtenerVideosNodo(String urlNodo) {
         return restTemplate.getForObject(
                 urlNodo + "/videos",
                 String[].class
         );
     }
+
     public void descargarFragmento(String urlNodo, String nombreArchivo, String nodoLocal) {
 
     try {
@@ -47,6 +54,14 @@ public class FragmentService {
         );
 
         System.out.println("Archivo descargado: " + nombreArchivo);
+        
+        FragmentMessage mensaje = new FragmentMessage(
+            "nodo_a",
+            nombreArchivo,
+            1
+        );
+
+        publisher.publicar(mensaje);
 
     } catch (Exception e) {
         System.out.println("Error descargando: " + nombreArchivo);
