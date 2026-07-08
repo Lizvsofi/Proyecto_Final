@@ -1,16 +1,16 @@
 package mx.uam.cua.nodo_c.service;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import mx.uam.cua.nodo_c.messaging.FragmentPublisher;
-import mx.uam.cua.nodo_c.model.FragmentMessage;
 
-import java.io.FileOutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import mx.uam.cua.nodo_c.messaging.FragmentPublisher;
+import mx.uam.cua.nodo_c.model.FragmentInfo;
 
 @Service
 public class FragmentService {
@@ -55,13 +55,17 @@ public class FragmentService {
 
         System.out.println("Archivo descargado: " + nombreArchivo);
         
-        FragmentMessage mensaje = new FragmentMessage(
+        FragmentInfo info = new FragmentInfo(
             "nodo_c",
             nombreArchivo,
             1
         );
 
-        publisher.publicar(mensaje);
+        restTemplate.postForObject(
+            "http://localhost:8084/registry",
+            info,
+            String.class
+        );
 
     } catch (Exception e) {
         System.out.println("Error descargando: " + nombreArchivo);
