@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import mx.uam.cua.nodo_a.messaging.FragmentPublisher;
+import mx.uam.cua.nodo_a.model.FragmentInfo;
 import mx.uam.cua.nodo_a.model.FragmentMessage;
 
 import java.io.FileOutputStream;
@@ -55,13 +56,17 @@ public class FragmentService {
 
         System.out.println("Archivo descargado: " + nombreArchivo);
         
-        FragmentMessage mensaje = new FragmentMessage(
+        FragmentInfo info = new FragmentInfo(
             "nodo_a",
             nombreArchivo,
             1
         );
 
-        publisher.publicar(mensaje);
+        restTemplate.postForObject(
+            "http://localhost:8084/registry",
+            info,
+            String.class
+        );
 
     } catch (Exception e) {
         System.out.println("Error descargando: " + nombreArchivo);
