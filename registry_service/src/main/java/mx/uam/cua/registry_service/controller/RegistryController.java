@@ -19,6 +19,11 @@ public class RegistryController {
     @PostMapping
     public String registrarFragmento(@RequestBody FragmentInfo fragmento) {
 
+        System.out.println("===== REGISTRY =====");
+        System.out.println("Nodo: " + fragmento.getNodo());
+        System.out.println("Video: " + fragmento.getVideo());
+        System.out.println("Fragmento: " + fragmento.getFragmento());
+
         registryService.registrar(fragmento);
 
         return "Fragmento registrado correctamente";

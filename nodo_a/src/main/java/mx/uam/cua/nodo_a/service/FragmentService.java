@@ -55,18 +55,28 @@ public class FragmentService {
         );
 
         System.out.println("Archivo descargado: " + nombreArchivo);
-        
-        FragmentInfo info = new FragmentInfo(
-            "nodo_a",
-            nombreArchivo,
-            1
+
+        FragmentMessage mensaje = new FragmentMessage(
+                "nodo_a",
+                nombreArchivo,
+                1
         );
 
-        restTemplate.postForObject(
-            "http://localhost:8084/registry",
-            info,
-            String.class
+        publisher.publicar(mensaje);
+
+        FragmentInfo info = new FragmentInfo(
+                "nodo_a",
+                nombreArchivo,
+                1
         );
+
+        String respuesta = restTemplate.postForObject(
+                "http://localhost:8084/registry",
+                info,
+                String.class
+        );
+
+        System.out.println("Respuesta del Registry: " + respuesta);
 
     } catch (Exception e) {
         System.out.println("Error descargando: " + nombreArchivo);
