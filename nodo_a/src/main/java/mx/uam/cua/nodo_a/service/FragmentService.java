@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import mx.uam.cua.nodo_a.messaging.FragmentPublisher;
-import mx.uam.cua.nodo_a.model.FragmentInfo;
 import mx.uam.cua.nodo_a.model.FragmentMessage;
 
 @Service
@@ -64,11 +63,6 @@ public class FragmentService {
 
         publisher.publicar(mensaje);
 
-        FragmentInfo info = new FragmentInfo(
-                "nodo_a",
-                nombreArchivo,
-                1
-        );
 
     } catch (Exception e) {
         System.out.println("Error descargando: " + nombreArchivo);

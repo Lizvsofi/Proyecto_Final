@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import mx.uam.cua.nodo_b.messaging.FragmentPublisher;
-import mx.uam.cua.nodo_b.model.FragmentInfo;
+import mx.uam.cua.nodo_b.model.FragmentMessage;
 
 @Service
 public class FragmentService {
@@ -54,18 +54,15 @@ public class FragmentService {
         );
 
         System.out.println("Archivo descargado: " + nombreArchivo);
-        
-        FragmentInfo info = new FragmentInfo(
-            "nodo_b",
-            nombreArchivo,
-            1
+
+        FragmentMessage mensaje = new FragmentMessage(
+                "nodo_b",
+                nombreArchivo,
+                1
         );
 
-        restTemplate.postForObject(
-            "http://localhost:8084/registry",
-            info,
-            String.class
-        );
+        publisher.publicar(mensaje);
+
 
     } catch (Exception e) {
         System.out.println("Error descargando: " + nombreArchivo);
